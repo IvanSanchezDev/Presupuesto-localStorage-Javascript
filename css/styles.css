@@ -1,0 +1,17 @@
+.presupuesto{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #88131f;
+    height: 45vh;
+    color: white;
+}
+
+.navbar{
+    justify-content: center;
+}
+
+.tabla{
+    justify-content: center;
+    align-items: center;
+}
