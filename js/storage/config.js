@@ -8,8 +8,9 @@ export default {
             e.preventDefault();
             
            const data = Object.fromEntries(new FormData(e.target))
-            presupuestos.unshift(data)
-            localStorage.setItem("myPresupuesto", JSON.stringify({presupuestos,}))
+           const {tipo, descripcion, valor} = data
+            presupuestos.unshift({tipo,descripcion,valor})
+            localStorage.setItem("myPresupuesto", JSON.stringify({presupuestos}))
             console.log(presupuestos);
             form.reset();
         })

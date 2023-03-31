@@ -1,28 +1,36 @@
 let wsPresupuesto={
 
-    listPresupuesto(arr){
+    listEgresos(arr){
         let html="";
         arr.forEach((val,id) => {
-            if(val.tipo=="-"){
-                return html+=`
+            if(val.tipo=="+"){
+                 html+=`
                 <tr>
                             <td>${val.descripcion}</td>
                             <td>${val.valor}</td>
                         </tr>
                         `
-            }else{
-                return html+=`
-                <tr>
-                            <td>${val.descripcion}</td>
-                            <td>${val.valor}</td>
-                        </tr>
-                        `
-
             }
             
         });
         
-         html;
+         return html;
+    }, 
+    listIngresos(arr){
+        let html="";
+        arr.forEach((val,id) => {
+            if(val.tipo=="-"){
+                 html+=`
+                        <tr>
+                            <td>${val.descripcion}</td>
+                            <td>${val.valor}</td>
+                        </tr>
+                        `
+            }
+            
+        });
+        
+         return html;
     }
 
 }
