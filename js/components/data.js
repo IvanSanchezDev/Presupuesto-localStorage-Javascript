@@ -1,30 +1,35 @@
-import config from "../storage/config.js"
+import config from "../storage/config.js";
 
-export default{
-    
-    showData(){
+export default {
+  showData() {
+    config.dataMyPresupuesto();
+    Object.assign(this, JSON.parse(localStorage.getItem("myPresupuesto")));
 
-        config.dataMyPresupuesto();
-        Object.assign(this, JSON.parse(localStorage.getItem("myPresupuesto")))
-       
+    const ws = new Worker("js/storage/wsPresupuesto.js", { type: "module" });
 
-        const ws=new Worker("js/storage/wsPresupuesto.js", {type:"module"})
+    const arrayDatos = this.presupuestos;
 
+    ws.postMessage({ module: "listEgresos", data: arrayDatos });
+    ws.postMessage({ module: "listIngresos", data: arrayDatos });
+    ws.postMessage({ module: "contIngresos", data: arrayDatos });
+    ws.postMessage({ module: "contEgresos", data: arrayDatos });
+    ws.postMessage({ module: "totalPresupuesto", data: arrayDatos });
 
-        ws.postMessage({module:"listEgresos", data:this.presupuestos})
-        ws.postMessage({module:"listIngresos", data:this.presupuestos})
-
-        let id=["#ingresos", "#egresos"]
-        let count=0;
-
-        console.log("entraaa");
-        ws.addEventListener("message", (e)=>{
-            console.log("entraa22");
-            console.log(e.data);
-            let doc=new DOMParser().parseFromString(e.data, "text/html");
-            //console.log(doc.body);
-            document.querySelector(`${id[count]}`).append(doc.body);
-            count++
-          })
-    }
-}
+    let id = [
+      "#ingresos",
+      "#egresos",
+      "#valorIngresos",
+      "#valorEgresos",
+      "#presupuesto",
+    ];
+    let count = 0;
+    ws.addEventListener("message", (e) => {
+      console.log(e.data);
+      if (typeof e.data === "number") {
+        e.data.toLocaleString("es-CO", { style: "currency", currency: "COP" });
+      }
+      document.querySelector(`${id[count]}`).insertAdjacentHTML("beforeend", e.data);
+      count++;
+    });
+  },
+};

@@ -1,4 +1,3 @@
-import data from "./components/data.js"
-
+import data from "./components/data.js";
 
 data.showData();
