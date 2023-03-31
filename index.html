@@ -15,23 +15,21 @@
   </head>
   <body>
     <div class="container-fluid presupuesto">
-      <h1>PRESUPUESTO DISPONIBLE</h1>
-      <h2 id="presupuesto"></h2>
-      <div class="container">
-        <div
-          class="d-flex justify-content-center align-items-center valores mb-3"
-        >
-          <h6>Ingresos</h6>
-          <div class="row">
+      <h6>PRESUPUESTO DISPONIBLE</h6>
+      <h1 id="presupuesto"></h1>
+      <div class="container containerValores">
+        <div class="valores mb-3 mt-2">
+          <div class="d-flex flex-row justify-content-around">
+            <h6>Ingresos</h6>
             <h6 id="valorIngresos" class=""></h6>
-            <h6><span>%</span></h6>
+            
           </div>
         </div>
-        <div class="d-flex justify-content-center align-items-center valores">
-          <h6>Egresos</h6>
-          <div>
+        <div class="valores"> 
+          <div class="d-flex flex-row justify-content-around align-items-center">
+            <h6>Egresos</h6>
             <h6 id="valorEgresos" class=""></h6>
-            <h6><span>%</span></h6>
+            <span id="porcentajeEgresos">%</span>
           </div>
         </div>
       </div>
@@ -84,7 +82,7 @@
           </table>
         </div>
         <di class="col-6">
-          <h2 class="text-success text-center">EGRESOS</h2>
+          <h2 class="text-danger text-center">EGRESOS</h2>
           <table class="table egresos">
             <thead>
               <tr>
@@ -92,7 +90,7 @@
                 <th>Valor</th>
               </tr>
             </thead>
-            <tbody id="egresos"></tbody>
+            <tbody id="egresos" ></tbody>
           </table>
         </di>
       </div>

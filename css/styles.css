@@ -10,11 +10,20 @@ background: linear-gradient(90deg, rgba(0,224,255,1) 0%, rgba(9,121,33,0.5438376
     color: white;
 }
 
+.containerValores{
+    display: flex;
+flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .valores{
     background-color: #051937;
-    width: 500px;
+    width: 400px;
     height: 50px;
-    
+    align-items: center;
+justify-content: center;
+
 }
 
 .navbar{
