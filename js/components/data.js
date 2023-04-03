@@ -1,8 +1,16 @@
 import config from "../storage/config.js";
 
+
+
+
 export default {
   showData() {
     config.dataMyPresupuesto();
+    
+
+   
+
+
     Object.assign(this, JSON.parse(localStorage.getItem("myPresupuesto")));
 
     const ws = new Worker("js/storage/wsPresupuesto.js", { type: "module" });
@@ -15,6 +23,7 @@ export default {
     ws.postMessage({ module: "contEgresos", data: arrayDatos });
     ws.postMessage({ module: "totalPresupuesto", data: arrayDatos });
     ws.postMessage({module:"porcentajeEgresos", data:arrayDatos})
+    
 
     let id = [
       
@@ -26,6 +35,8 @@ export default {
       "#porcentajeEgresos"
     ];
     let count = 0;
+
+
     ws.addEventListener("message", (e) => {
       if (typeof e.data === "number") {
         e.data.toLocaleString("es-CO", { style: "currency", currency: "COP" });
@@ -33,5 +44,28 @@ export default {
       document.querySelector(`${id[count]}`).insertAdjacentHTML("beforeend", e.data);
       count++;
     });
+
+
+    
   },
+  eliminarData(){
+    const listado = document.querySelector(".egresos"); // Seleccionar la tabla
+    listado.addEventListener("click", (e) => { // Agregar evento de click
+    if (e.target.classList.contains("eliminar")) { // Verificar si se hizo clic en el botón eliminar
+    const item = e.target.parentNode.parentNode; // Obtener el elemento <tr> que contiene la fila
+    const descripcion = item.querySelector(".descripcion").textContent; // Obtener el texto de la descripción
+    let Arraypresupuestos = JSON.parse(localStorage.getItem('myPresupuesto')); // Obtener el array de objetos de localStorage
+    Arraypresupuestos.presupuestos.forEach((obj, index) => { // Iterar sobre los objetos del array
+      if (obj.descripcion === descripcion) { // Si la descripción del objeto coincide con la descripción de la fila
+        Arraypresupuestos.presupuestos.splice(index, 1); // Eliminar el objeto del array utilizando splice()
+        localStorage.setItem("myPresupuesto", JSON.stringify(Arraypresupuestos)); // Actualizar localStorage
+        item.parentNode.removeChild(item); // Eliminar la fila de la tabla
+        window.postMessage({type: 'updateLocalStorage'}, '*');
+      }
+    });
+  }
+});
+
+  }
+  
 };

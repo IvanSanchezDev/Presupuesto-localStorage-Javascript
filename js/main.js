@@ -3,12 +3,18 @@ import data from "./components/data.js";
 
 
 
-//let presupuestos = JSON.parse(localStorage.getItem('myPresupuesto'));
-//console.log(presupuestos.presupuestos);
-
-//presupuestos=presupuestos.presupuestos.filter(obj => obj.descripcion !== "campus");
-//console.log(presupuestos);
-//localStorage.setItem("myPresupuesto", JSON.stringify(presupuestos));
-
-
 data.showData();
+data.eliminarData();
+
+
+
+
+// Escuchar el evento message
+window.addEventListener('message', (event) => {
+    if (event.data.type === 'updateLocalStorage' && event.origin === window.location.origin) {
+      // Actualizar la página o realizar cualquier otra acción necesaria
+      location.reload();
+    }
+  });
+
+

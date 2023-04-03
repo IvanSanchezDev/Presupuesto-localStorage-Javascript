@@ -1,3 +1,4 @@
+
 export default {
   dataMyPresupuesto() {
     const form = document.querySelector("#myFormulario");
@@ -9,8 +10,25 @@ export default {
      // console.log(data);
       presupuestos.presupuestos.unshift(data);
       localStorage.setItem("myPresupuesto", JSON.stringify(presupuestos));
-      //console.log(presupuestos);
+      window.postMessage({type: 'updateLocalStorage'}, '*');
       form.reset();
+
+      
+    });
+
+
+
+    window.addEventListener('storage', (e)=> {
+     
+        location.reload();
+      
     });
   },
-};
+
+}
+  
+  
+ 
+
+  
+
