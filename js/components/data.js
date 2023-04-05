@@ -8,9 +8,6 @@ export default {
     config.dataMyPresupuesto();
     
 
-   
-
-
     Object.assign(this, JSON.parse(localStorage.getItem("myPresupuesto")));
 
     const ws = new Worker("js/storage/wsPresupuesto.js", { type: "module" });
@@ -23,16 +20,16 @@ export default {
     ws.postMessage({ module: "contEgresos", data: arrayDatos });
     ws.postMessage({ module: "totalPresupuesto", data: arrayDatos });
     ws.postMessage({module:"porcentajeEgresos", data:arrayDatos})
+  
     
 
-    let id = [
-      
+    let id = [   
       "#egresos",
       "#ingresos",
       "#valorIngresos",
       "#valorEgresos",
       "#presupuesto",
-      "#porcentajeEgresos"
+      "#porcentajeEgresos",
     ];
     let count = 0;
 
@@ -41,13 +38,17 @@ export default {
       if (typeof e.data === "number") {
         e.data.toLocaleString("es-CO", { style: "currency", currency: "COP" });
       }
+     
       document.querySelector(`${id[count]}`).insertAdjacentHTML("beforeend", e.data);
-      count++;
+      id.length - 1 == count ? ws.terminate : count++;
     });
 
 
     
   },
+
+
+  
   eliminarData(){
     const listado = document.querySelector(".egresos"); // Seleccionar la tabla
     listado.addEventListener("click", (e) => { // Agregar evento de click
@@ -67,5 +68,13 @@ export default {
 });
 
   }
+}
+
   
-};
+
+  
+
+  
+
+
+

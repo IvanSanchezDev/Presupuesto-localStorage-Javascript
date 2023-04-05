@@ -4,12 +4,11 @@ let wsPresupuesto = {
     arr.forEach((val, id) => {
       if (val.tipo == "-") {
         html += `
-                <tr>
+                <tr id="filaEgresos">
                             <td class="descripcion">${val.descripcion}</td>
-                            <td class="text-danger">${val.valor}</td>
-                            <td>
-                              <button class="btn btn-danger eliminar">Eliminar</button>
-                            </td>
+                            <td class="text-danger valor">${val.valor}</td>
+                            <td>${(val.valor*100/this.contEgresos(arr)).toFixed(2)}%</td>
+                            <td class="btn btn-danger eliminar text-dark">Eliminar</td> 
                         </tr>
                         `;
       }
@@ -22,10 +21,10 @@ let wsPresupuesto = {
     arr.forEach((val, id) => {
       if (val.tipo == "+") {
         html += `
-                        <tr>
+                        <tr class="fila">
                             <td class="descripcion">${val.descripcion}</td>
-                            <td class="text-success">${val.valor}</td>
-                            <td><button class="btn btn-danger eliminar">Eliminar</button></td>
+                            <td class="text-success valor">${val.valor}</td>
+                            <td><button class="btn btn-danger eliminar" style="display:none;">Eliminar</button></td>
                         </tr>
                         `;
       }
@@ -54,8 +53,11 @@ let wsPresupuesto = {
   },
   porcentajeEgresos(arr){
     const porcentaje= (this.contEgresos(arr)*100)/this.contIngresos(arr);
-    return porcentaje.toFixed(2);
-  }
+    return `${porcentaje.toFixed(2)}%`;
+  },
+  
+  
+  
  
 };
 
