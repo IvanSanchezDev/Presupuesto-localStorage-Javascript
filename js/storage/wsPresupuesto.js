@@ -3,12 +3,13 @@ let wsPresupuesto = {
     let html = "";
     arr.forEach((val, id) => {
       if (val.tipo == "-") {
+        const formattedValue = (val.valor).toLocaleString('es-CO', { style: 'currency', currency: 'COP' });
         html += `
                 <tr id="filaEgresos">
                             <td class="descripcion">${val.descripcion}</td>
-                            <td class="text-danger valor">${val.valor}</td>
-                            <td>${(val.valor*100/this.contEgresos(arr)).toFixed(2)}%</td>
-                            <td class="btn btn-danger eliminar text-dark">Eliminar</td> 
+                            <td class="text-danger valor">-${formattedValue}</td>
+                            <td class="text-danger">${(val.valor*100/this.contEgresos(arr)).toFixed(2)}%</td>
+                            <td><button class="btn  eliminar"><i class="bi bi-x-circle text-danger"></i></button></td> 
                         </tr>
                         `;
       }
@@ -20,11 +21,12 @@ let wsPresupuesto = {
     let html = "";
     arr.forEach((val, id) => {
       if (val.tipo == "+") {
+        const formattedValue = (val.valor).toLocaleString('es-CO', { style: 'currency', currency: 'COP' });
         html += `
                         <tr class="fila">
                             <td class="descripcion">${val.descripcion}</td>
-                            <td class="text-success valor">${val.valor}</td>
-                            <td><button class="btn btn-danger eliminar" style="display:none;">Eliminar</button></td>
+                            <td class="text-success valor">+${formattedValue}</td>
+                            <td><button class="btn  eliminar"><i class="bi bi-x-circle text-danger"></i></button></td>
                         </tr>
                         `;
       }
@@ -49,7 +51,7 @@ let wsPresupuesto = {
   totalPresupuesto(arr) {
     const total = this.contIngresos(arr) - this.contEgresos(arr);
 
-    return total.toLocaleString('es-CO', { style: 'currency', currency: 'COP' });;
+    return total;
   },
   porcentajeEgresos(arr){
     const porcentaje= (this.contEgresos(arr)*100)/this.contIngresos(arr);

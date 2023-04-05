@@ -34,12 +34,11 @@ export default {
     let count = 0;
 
 
-    ws.addEventListener("message", (e) => {
-      if (typeof e.data === "number") {
-        e.data.toLocaleString("es-CO", { style: "currency", currency: "COP" });
-      }
+    ws.addEventListener("message", (e) => {    
+
+      console.log(e.data);
      
-      document.querySelector(`${id[count]}`).insertAdjacentHTML("beforeend", e.data);
+      document.querySelector(`${id[count]}`).insertAdjacentHTML("beforeend", e.data.toLocaleString('es-CO', { style: 'currency', currency: 'COP' }));
       id.length - 1 == count ? ws.terminate : count++;
     });
 
