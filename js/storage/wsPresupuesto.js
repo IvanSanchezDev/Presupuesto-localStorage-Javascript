@@ -58,10 +58,44 @@ let wsPresupuesto = {
     return `${porcentaje.toFixed(2)}%`;
   },
   
+  graficaPresupuesto(arr){
+    // Initialize the echarts instance based on the prepared dom
+    // Specify the configuration items and data for the chart
+    let option = {
+    title: {
+        text: 'Presupuesto'
+    },
+    tooltip: {},
+    legend: {
+        data: ['Cantidad']
+    },
+    xAxis: {
+        data: ['Ingresos', 'Egresos']
+    },
+    yAxis: {},
+    series: [
+        {
+        name: 'valor',
+        type: 'bar',
+        data: [
+          {value: `${this.contEgresos(arr)}`, 
+          itemStyle: {
+          color: '#37A2FF'}}, 
+        { value: `${this.contIngresos(arr)}`, color: '#37A2FF'} ],
+        
+        }
+    ]
+    };
+
+    // Display the chart using the configuration items and data just specified.
+    return option;
+}
+}
+  
   
   
  
-};
+
 
 self.addEventListener("message", (e) => {
   postMessage(wsPresupuesto[`${e.data.module}`](e.data.data));

@@ -39,3 +39,9 @@ padding: 10px;
     margin-top: 5rem;
 }
 
+.grafica{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+

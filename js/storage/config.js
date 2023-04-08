@@ -7,8 +7,8 @@ export default {
       //localStorage.clear();
       e.preventDefault();
       const data = Object.fromEntries(new FormData(e.target));
-     // console.log(data);
-      presupuestos.presupuestos.unshift(data);
+      console.log(presupuestos.presupuestos);
+      presupuestos.presupuestos.unshift(data)
       localStorage.setItem("myPresupuesto", JSON.stringify(presupuestos));
       window.postMessage({type: 'updateLocalStorage'}, '*');
       form.reset();

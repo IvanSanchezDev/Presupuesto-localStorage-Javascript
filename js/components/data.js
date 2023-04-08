@@ -20,6 +20,7 @@ export default {
     ws.postMessage({ module: "contEgresos", data: arrayDatos });
     ws.postMessage({ module: "totalPresupuesto", data: arrayDatos });
     ws.postMessage({module:"porcentajeEgresos", data:arrayDatos})
+    //ws.postMessage({module: "graficaPresupuesto", data:arrayDatos})
   
     
 
@@ -65,6 +66,25 @@ export default {
     });
   }
 });
+
+  },
+
+  showGrafica(){
+    Object.assign(this, JSON.parse(localStorage.getItem("myPresupuesto")));
+
+    const ws = new Worker("js/storage/wsPresupuesto.js", { type: "module" });
+
+    const arrayDatos = this.presupuestos;
+
+
+    ws.postMessage({module: "graficaPresupuesto", data:arrayDatos})
+
+    ws.addEventListener("message", (e)=>{
+    
+      let myChart = echarts.init(document.getElementById('grafica'));
+      myChart.setOption(e.data);
+    })
+
 
   }
 }
