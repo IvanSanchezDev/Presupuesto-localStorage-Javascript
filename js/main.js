@@ -3,7 +3,8 @@ import data from "./components/data.js";
 
 data.showData();
 data.showGrafica();
-data.eliminarData();
+data.eliminarDataEgreso();
+data.eliminarDataIngreso();
 
 
 
