@@ -2,9 +2,9 @@ import data from "./components/data.js";
 
 
 data.showData();
-data.showGrafica();
-data.eliminarDataEgreso();
-data.eliminarDataIngreso();
+data.eliminarData("#ingresos");
+data.eliminarData("#egresos")
+
 
 
 

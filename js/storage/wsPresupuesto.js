@@ -1,13 +1,14 @@
 let wsPresupuesto = {
+  config: new Intl.NumberFormat({ minimumFractionDigits: 0 }),
   listEgresos(arr) {
     let html = "";
     arr.forEach((val, id) => {
       if (val.tipo == "-") {
-        const formattedValue = (val.valor).toLocaleString('es-CO', { style: 'currency', currency: 'COP' });
+        //const formattedValue = (val.valor).toLocaleString('es-CO', { style: 'currency', currency: 'COP' });
         html += `
                 <tr id="filaEgresos">
                             <td class="descripcion">${val.descripcion}</td>
-                            <td class="text-danger valor">-${formattedValue}</td>
+                            <td class="text-danger valor">-$${this.config.format(val.valor)}</td>
                             <td class="text-danger">${(val.valor*100/this.contEgresos(arr)).toFixed(2)}%</td>
                             <td><button class="btn  eliminar"><i class="bi bi-x-circle text-danger"></i></button></td> 
                         </tr>
@@ -25,7 +26,7 @@ let wsPresupuesto = {
         html += `
                         <tr class="fila">
                             <td class="descripcion">${val.descripcion}</td>
-                            <td class="text-success valor">+${formattedValue}</td>
+                            <td class="text-success valor">+$${this.config.format(val.valor)}</td>
                             <td><button class="btn  eliminar"><i class="bi bi-x-circle text-danger"></i></button></td>
                         </tr>
                         `;
@@ -70,7 +71,7 @@ let wsPresupuesto = {
         data: ['Cantidad']
     },
     xAxis: {
-        data: ['Ingresos', 'Egresos']
+        data: ['Egresos', 'Ingresos']
     },
     yAxis: {},
     series: [
