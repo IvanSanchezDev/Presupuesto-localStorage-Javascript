@@ -1,12 +1,10 @@
-import config from "../storage/config.js";
 
-
-
+import config from "./../storage/config.js"
 
 export default {
   showData() {
-    config.dataMyPresupuesto();
-    
+
+
 
     Object.assign(this, JSON.parse(localStorage.getItem("myPresupuesto")));
 
@@ -19,12 +17,12 @@ export default {
     ws.postMessage({ module: "contIngresos", data: arrayDatos });
     ws.postMessage({ module: "contEgresos", data: arrayDatos });
     ws.postMessage({ module: "totalPresupuesto", data: arrayDatos });
-    ws.postMessage({module:"porcentajeEgresos", data:arrayDatos})
-    //ws.postMessage({module: "graficaPresupuesto", data:arrayDatos})
-  
-    
+    ws.postMessage({ module: "porcentajeEgresos", data: arrayDatos })
 
-    let id = [   
+
+
+
+    let id = [
       "#egresos",
       "#ingresos",
       "#valorIngresos",
@@ -35,10 +33,10 @@ export default {
     let count = 0;
 
 
-    ws.addEventListener("message", (e) => {    
+    ws.addEventListener("message", (e) => {
 
-    
-     
+
+
       document.querySelector(`${id[count]}`).insertAdjacentHTML("beforeend", e.data.toLocaleString('es-CO', { style: 'currency', currency: 'COP' }));
       id.length - 1 == count ? ws.terminate : count++;
     });
@@ -46,36 +44,39 @@ export default {
     this.showGrafica();
 
 
-    
+
   },
-
-
-  
-  eliminarData(idSelector){
-    const listado = document.querySelector(idSelector); // Seleccionar la tabla
+  eliminarData(){
+    document.querySelector(".tabla").addEventListener("click", (e) => {
+      let item;
+      let descripcion;
+      if (e.target.classList.contains("eliminar")) {
+        item = e.target.parentNode.parentNode;
+        descripcion = item.querySelector(".descripcion").textContent;
     
-    listado.addEventListener("click", (e) => { // Agregar evento de click
-    if (e.target.classList.contains("eliminar")) { // Verificar si se hizo clic en el botón eliminar
-    const item = e.target.parentNode.parentNode; // Obtener el elemento <tr> que contiene la fila
-    console.log(item);
-    const descripcion = item.querySelector(".descripcion").textContent; // Obtener el texto de la descripción
-    let Arraypresupuestos = JSON.parse(localStorage.getItem('myPresupuesto')); // Obtener el array de objetos de localStorage
-    Arraypresupuestos.presupuestos.forEach((obj, index) => { // Iterar sobre los objetos del array
-      if (obj.descripcion === descripcion) { // Si la descripción del objeto coincide con la descripción de la fila
-        Arraypresupuestos.presupuestos.splice(index, 1); // Eliminar el objeto del array utilizando splice()
-        localStorage.setItem("myPresupuesto", JSON.stringify(Arraypresupuestos)); // Actualizar localStorage
-        item.parentNode.removeChild(item); // Eliminar la fila de la tabla
-        window.postMessage({type: 'updateLocalStorage'}, '*');
       }
-    });
-  }
-});
-
+    
+      const ws = new Worker("js/storage/wsPresupuesto.js", { type: "module" });
+    
+      let Arraypresupuestos = config.presupuestos;
+    
+      const dataa = { Arraypresupuestos, descripcion }
+    
+      ws.postMessage({ module: "eliminarItems", data: dataa });
+    
+    
+      ws.addEventListener("message", (e) => {
+        localStorage.setItem("myPresupuesto", JSON.stringify(e.data));
+      })
+    
+      item.parentNode.removeChild(item); // Eliminar la fila de la tabla
+    
+    
+    })
   },
-  
-  
 
-  showGrafica(){
+
+  showGrafica() {
     Object.assign(this, JSON.parse(localStorage.getItem("myPresupuesto")));
 
     const ws = new Worker("js/storage/wsPresupuesto.js", { type: "module" });
@@ -83,23 +84,26 @@ export default {
     const arrayDatos = this.presupuestos;
 
 
-    ws.postMessage({module: "graficaPresupuesto", data:arrayDatos})
+    ws.postMessage({ module: "graficaPresupuesto", data: arrayDatos })
 
-    ws.addEventListener("message", (e)=>{
-    
+    ws.addEventListener("message", (e) => {
+
       let myChart = echarts.init(document.getElementById('grafica'));
       myChart.setOption(e.data);
+      ws.terminate();
     })
+
+ 
 
 
   }
 }
 
-  
 
-  
 
-  
+
+
+
 
 
 

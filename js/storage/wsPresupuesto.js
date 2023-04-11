@@ -4,7 +4,7 @@ let wsPresupuesto = {
     let html = "";
     arr.forEach((val, id) => {
       if (val.tipo == "-") {
-        //const formattedValue = (val.valor).toLocaleString('es-CO', { style: 'currency', currency: 'COP' });
+        
         html += `
                 <tr id="filaEgresos">
                             <td class="descripcion">${val.descripcion}</td>
@@ -22,7 +22,7 @@ let wsPresupuesto = {
     let html = "";
     arr.forEach((val, id) => {
       if (val.tipo == "+") {
-        const formattedValue = (val.valor).toLocaleString('es-CO', { style: 'currency', currency: 'COP' });
+       
         html += `
                         <tr class="fila">
                             <td class="descripcion">${val.descripcion}</td>
@@ -58,6 +58,20 @@ let wsPresupuesto = {
     const porcentaje= (this.contEgresos(arr)*100)/this.contIngresos(arr);
     return `${porcentaje.toFixed(2)}%`;
   },
+
+  eliminarItems(data){
+    const obj=data.Arraypresupuestos;
+    const descripcion=data.descripcion;
+    obj.presupuestos.forEach((objj, index) => { // Iterar sobre los objetos del array
+      if (objj.descripcion === descripcion) { // Si la descripción del objeto coincide con la descripción de la fila
+        obj.presupuestos.splice(index, 1); // Eliminar el objeto del array utilizando splice
+      
+      }
+    });
+
+    
+    return obj;
+  },
   
   graficaPresupuesto(arr){
     // Initialize the echarts instance based on the prepared dom
@@ -90,13 +104,12 @@ let wsPresupuesto = {
 
     // Display the chart using the configuration items and data just specified.
     return option;
-}
-}
-  
+},
+
   
   
  
-
+}
 
 self.addEventListener("message", (e) => {
   postMessage(wsPresupuesto[`${e.data.module}`](e.data.data));
