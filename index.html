@@ -31,7 +31,7 @@
       </div>
     </div>
 
-    <nav class="navbar navbar-light bg-light">
+    <nav class="navbar navbar-dark bg-dark">
       <form action="" id="myFormulario">
         <div class="row">
           <div class="col-2">
@@ -63,45 +63,50 @@
       </form>
     </nav>
 
-    <div class="container tabla mt-5 mb-5">
-      <div class="row">
-        <div class="col-6">
-          <h2 class="text-success text-center mb-5">INGRESOS</h2>
-          <table class="table ingresos text-center">
-            <thead>
-              <tr>
-                <th>Descripcion</th>
-                <th>Valor</th>
-              </tr>
-            </thead>
-            <tbody id="ingresos"></tbody>
-          </table>
+    <div class="content">
+      <div class="container tabla  mb-5">
+        <div class="row">
+          <div class="col-6 mt-5">
+            <h2 class="text-success text-center mb-5">INGRESOS</h2>
+            <table class="table ingresos text-center">
+              <thead>
+                <tr>
+                  <th>Descripcion</th>
+                  <th>Valor</th>
+                </tr>
+              </thead>
+              <tbody id="ingresos"></tbody>
+            </table>
+          </div>
+          <div class="col-6 mt-5">
+            <h2 class="text-danger text-center mb-5">EGRESOS</h2>
+            <table class="table egresos text-center">
+              <thead>
+                <tr>
+                  <th>Descripcion</th>
+                  <th>Valor</th>
+                </tr>
+              </thead>
+              <tbody id="egresos" >
+  
+               
+              </tbody>
+            </table>
+          </div>
         </div>
-        <div class="col-6">
-          <h2 class="text-danger text-center mb-5">EGRESOS</h2>
-          <table class="table egresos text-center">
-            <thead>
-              <tr>
-                <th>Descripcion</th>
-                <th>Valor</th>
-              </tr>
-            </thead>
-            <tbody id="egresos" >
-
-             
-            </tbody>
-          </table>
-        </div>
+  
+        
+  
+        
+      </div>
+  
+      <div class="container grafica mt-5">
+        <div id="grafica" style="width: 600px;height:400px;"></div>
       </div>
 
-      
-
-      
     </div>
 
-    <div class="container grafica mt-5">
-      <div id="grafica" style="width: 600px;height:400px;"></div>
-    </div>
+    
    
 
     
