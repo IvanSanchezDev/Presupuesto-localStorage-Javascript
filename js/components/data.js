@@ -32,9 +32,10 @@ export default {
     ];
     let count = 0;
 
-
+    
     ws.addEventListener("message", (e) => {
-
+      
+      document.querySelector(`${id[count]}`).innerHTML="";
 
 
       document.querySelector(`${id[count]}`).insertAdjacentHTML("beforeend", e.data.toLocaleString('es-CO', { style: 'currency', currency: 'COP' }));
@@ -46,33 +47,17 @@ export default {
 
 
   },
-  eliminarData(){
-    document.querySelector(".tabla").addEventListener("click", (e) => {
-      let item;
-      let descripcion;
+  eliminarData() {
+    addEventListener("click", (e) => {
       if (e.target.classList.contains("eliminar")) {
-        item = e.target.parentNode.parentNode;
-        descripcion = item.querySelector(".descripcion").textContent;
-    
+        const filaEliminada = e.target.parentNode.parentNode;
+        const id = e.target.getAttribute("id_ingreso");
+        config.presupuestos.presupuestos.splice(id, 1);
+        localStorage.setItem("myPresupuesto", JSON.stringify(config.presupuestos));
+        filaEliminada.parentNode.removeChild(filaEliminada);
+        this.showData(); 
       }
-    
-      const ws = new Worker("js/storage/wsPresupuesto.js", { type: "module" });
-    
-      let Arraypresupuestos = config.presupuestos;
-    
-      const dataa = { Arraypresupuestos, descripcion }
-    
-      ws.postMessage({ module: "eliminarItems", data: dataa });
-    
-    
-      ws.addEventListener("message", (e) => {
-        localStorage.setItem("myPresupuesto", JSON.stringify(e.data));
-      })
-    
-      item.parentNode.removeChild(item); // Eliminar la fila de la tabla
-    
-    
-    })
+    });
   },
 
 
@@ -93,7 +78,7 @@ export default {
       ws.terminate();
     })
 
- 
+
 
 
   }

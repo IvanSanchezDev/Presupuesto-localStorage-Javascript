@@ -10,7 +10,7 @@ let wsPresupuesto = {
                             <td class="descripcion">${val.descripcion}</td>
                             <td class="text-danger valor">-$${this.config.format(val.valor)}</td>
                             <td class="text-danger">${(val.valor*100/this.contEgresos(arr)).toFixed(2)}%</td>
-                            <td><button class="btn  eliminar"><i class="bi bi-x-circle text-danger"></i></button></td> 
+                            <td><button class="btn  eliminar" id_ingreso=${id}><i class="bi bi-x-circle text-danger"></i></button></td> 
                         </tr>
                         `;
       }
@@ -27,7 +27,7 @@ let wsPresupuesto = {
                         <tr class="fila">
                             <td class="descripcion">${val.descripcion}</td>
                             <td class="text-success valor">+$${this.config.format(val.valor)}</td>
-                            <td><button class="btn  eliminar"><i class="bi bi-x-circle text-danger"></i></button></td>
+                            <td><button class="btn  eliminar" id_ingreso=${id} ><i class="bi bi-x-circle text-danger"></i></button></td>
                         </tr>
                         `;
       }
@@ -59,19 +59,7 @@ let wsPresupuesto = {
     return `${porcentaje.toFixed(2)}%`;
   },
 
-  eliminarItems(data){
-    const obj=data.Arraypresupuestos;
-    const descripcion=data.descripcion;
-    obj.presupuestos.forEach((objj, index) => { // Iterar sobre los objetos del array
-      if (objj.descripcion === descripcion) { // Si la descripción del objeto coincide con la descripción de la fila
-        obj.presupuestos.splice(index, 1); // Eliminar el objeto del array utilizando splice
-      
-      }
-    });
-
-    
-    return obj;
-  },
+  
   
   graficaPresupuesto(arr){
     // Initialize the echarts instance based on the prepared dom

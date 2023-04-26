@@ -2,6 +2,11 @@ import data from "./components/data.js";
 import config from "./storage/config.js"
 
 
+addEventListener("DOMContentLoaded", (e)=>{
+  data.showData();
+  data.eliminarData();
+  
+})
 
 
 
@@ -20,8 +25,6 @@ addEventListener("submit", (e) => {
 
 });
 
-data.showData();
-data.eliminarData();
 
 
 
